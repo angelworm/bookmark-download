@@ -1,11 +1,23 @@
 from setuptools import setup
 
-setup(name='tool',
+try:
+    import py2exe
+except:
+    pass
+
+setup(name='dlb',
       version = '1.0',
-      py_modules = ['tool'],
+      py_modules = ['dlb'],
       install_requires = [
           'mechanize',
           'lxml',
           'requests'
-      ]
+      ],
+      package_dir={'dlb': 'dlb'},
+      packages=['dlb'],
+      console=['dlb/main.py'],
+      entry_points = {
+        'console_scripts': ['dlb=dlb.main:main'],
+    }
+
 )
