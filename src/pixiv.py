@@ -156,8 +156,14 @@ def searchTag(word, full=True):
     dom = lxml.html.fromstring(getPage(url))
     return map(makeImageData_, dom.xpath('//li[@class="image-item "]'))
 
-def bookmark(cj, page=1):
-    url = "https://www.pixiv.net/bookmark.php?rest=show&p=" + str(page)
+def bookmark(cj, page=1, hidden=True):
+    if hidden:
+        rest = 'hide'
+    else:
+        rest = 'show'
+    
+    
+    url = "https://www.pixiv.net/bookmark.php?rest=" + rest + "&p=" + str(page)
 
     txt = getPage(url, cj)
     

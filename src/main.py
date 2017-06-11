@@ -41,16 +41,19 @@ def login(username = None, password = None):
 
     return cj
 
-def loadThumbs(Q, cj, page):
-    print "loading bookmark page: " + str(page)
+def loadThumbs(Q, cj, v):
+    page, rest = v
+
+    bookmark = 'hidden' if rest else 'public'
+    print "loading bookmark page: " + str(page) + '(' + bookmark + ')'
     
-    thumbs = pixiv.bookmark(cj, 1)
+    thumbs = pixiv.bookmark(cj, 1, rest)
 
     for t in thumbs:
         Q.put(('t', t))
 
     if len(thumbs) != 0:
-        Q.put(('p', page + 1))
+        Q.put(('p', (page + 1, rest)))
 
 def makeOutput(dirname):
     suffix = 1
@@ -112,7 +115,8 @@ def run(cj, page = 1):
 
     outpath = makeOutput('out')
 
-    Q.put(('p', page))
+    Q.put(('p', (page, False)))
+    Q.put(('p', (page, True)))
     
     while not Q.empty():
         k, v = Q.get()
@@ -133,9 +137,7 @@ def run(cj, page = 1):
         except Exception as e:
            print(str(e))
            
-
         time.sleep(1)
-    print "aa"
     
 def main():
     cj = login()
