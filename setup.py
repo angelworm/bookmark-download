@@ -11,13 +11,27 @@ setup(name='dlb',
       install_requires = [
           'mechanize',
           'lxml',
-          'requests'
+          'requests',
       ],
-      package_dir={'dlb': 'dlb'},
-      packages=['dlb'],
-      console=['dlb/main.py'],
+      options = {
+          "py2exe": {
+              'packages': [
+                  'lxml.etree',
+                  'lxml._elementpath',
+                  'urllib2',
+                  'gzip',
+              ],  
+              
+          }
+      },
+      zipfile=None,
+      package_dir = {'dlb': 'dlb'},
+      packages=[
+          'dlb',
+      ],
+      console=['run.py'],
       entry_points = {
-        'console_scripts': ['dlb=dlb.main:main'],
+        'console_scripts': ['dlb=dlb.dlb:main'],
     }
 
 )

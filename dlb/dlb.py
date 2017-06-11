@@ -104,7 +104,7 @@ def fetchImage(Q, cj, path, v):
 
     path = os.path.join(path, filename)
 
-    with open(path, 'w') as f:
+    with open(path, 'wb') as f:
         res = pixiv.openI(url, referer=ref)
 
         for chunk in res.iter_content(1024*1024):
